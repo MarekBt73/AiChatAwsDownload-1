@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+Profile - {{ user.username }}
+{% endblock %}
+
+{% block content %}
+<h2>User Profile</h2>
+<p>Welcome, {{ user.username }}!</p>
+
+<h3>Profile Details:</h3>
+<ul>
+    <li><strong>Username:</strong> {{ user.username }}</li>
+    <li><strong>Email:</strong> {{ user.email }}</li>
+</ul>
+
+<h3>Account Actions:</h3>
+<ul>
+    <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
+    <li><a href="{% url 'account_logout' %}">Logout</a></li>
+</ul>
+{% endblock %}

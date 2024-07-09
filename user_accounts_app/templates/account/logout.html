@@ -1,0 +1,34 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% load allauth account %}
+{% load form_tags %}
+
+{% block head_title %}
+    {% trans "Sign Out" %}
+{% endblock head_title %}
+
+{% block content %}
+    <div class="mx-auto mt-16 max-w-xl sm:mt-20">
+        {% element h1 class="block text-sm font-semibold leading-6 text-gray-900 mb-4" %}
+            {% trans "Wylogowanie" %}
+        {% endelement %}
+
+        {% element p class="block text-sm leading-6 text-gray-600 mb-6" %}
+            {% trans 'Czy chcesz się wylogować?' %}
+        {% endelement %}
+
+        {% url 'account_logout' as action_url %}
+        {% element form method="post" action=action_url no_visible_fields=True class="grid grid-cols-1 gap-x-8 gap-y-6" %}
+            {% slot body %}
+                {% csrf_token %}
+                {{ redirect_field }}
+            {% endslot %}
+            {% slot actions %}
+<div class="w-flull">
+    <button type="submit" class="mt-4 w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        {% trans "Wyloguj się" %}
+    </button> </div>
+            {% endslot %}
+        {% endelement %}
+    </div>
+{% endblock content %}

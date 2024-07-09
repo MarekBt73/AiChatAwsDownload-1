@@ -1,0 +1,115 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% load allauth account %}
+{% load form_tags %}
+
+{% block head_title %}
+    {% translate "Sign In" %}
+{% endblock head_title %}
+{% block content %}
+    {% element h1 %}
+        {% translate "Mail me a sign-in code" %}
+    {% endelement %}
+    {% element p %}
+        {% blocktranslate %}You will receive an email containing a special code for a password-free sign-in.{% endblocktranslate %}
+    {% endelement %}
+    {% url 'account_request_login_code' as login_url %}
+    {% element form form=form method="post" action=login_url tags="entrance,login" %}
+        {% slot body %}
+            {% csrf_token %}
+            <div class="sm:col-span-2">
+                <label for="{{ form.login.id_for_label }}" class="block text-sm font-semibold leading-6 text-gray-900">
+                    {{ form.login.label }}
+                </label>
+                <div class="mt-2.5">
+                    {{ form.login|add_class:"block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
+                </div>
+            </div>
+            <div class="sm:col-span-2">
+                <label for="{{ form.password.id_for_label }}" class="block text-sm font-semibold leading-6 text-gray-900">
+                    {{ form.password.label }}
+                </label>
+                <div class="mt-2.5 relative">
+                    {{ form.password|add_class:"password-input block w-full rounded-md border-0 px-3.5 py-2 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
+                    <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5" onclick="togglePasswordVisibility()">
+                        <svg id="password-eye-icon" class="h-5 w-5 text-gray-500" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M12 4.5C7.30558 4.5 3.43067 7.764 2.09398 12 3.43067 16.236 7.30558 19.5 12 19.5C16.6944 19.5 20.5693 16.236 21.906 12 20.5693 7.764 16.6944 4.5 12 4.5Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M15 12C15 13.6569 13.6569 15 12 15 10.3431 15 9 13.6569 9 12 9 10.3431 10.3431 9 12 9 13.6569 9 15 10.3431 15 12Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            {{ redirect_field }}
+        {% endslot %}
+        {% slot actions %}
+            {% element button type="submit" tags="prominent,login" %}
+                {% translate "Request Code" %}
+            {% endelement %}
+        {% endslot %}
+    {% endelement %}
+    {% element h2 %}
+        {% url 'account_login' as login_url %}
+        {% element button href=login_url tags="link" %}
+            {% translate "Other sign-in options" %}
+        {% endelement %}
+    {% endelement %}
+{% endblock content %}
+
+<script>
+    function togglePasswordVisibility() {
+        const passwordInput = document.querySelector('.password-input');
+        const passwordEyeIcon = document.getElementById('password-eye-icon');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            passwordEyeIcon.setAttribute('fill', 'currentColor');
+        } else {
+            passwordInput.type = 'password';
+            passwordEyeIcon.setAttribute('fill', 'none');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.querySelector('.password-input');
+        passwordInput.addEventListener('input', function() {
+            passwordInput.classList.add('ring-2', 'ring-indigo-500');
+        });
+    });
+</script>
+{% block head_title %}
+    {% translate "Sign In" %}
+{% endblock head_title %}
+
+{% block content %}
+<div class="mx-auto mt-16 max-w-xl sm:mt-20">
+    {% element h1 %}
+        {% translate "Mail me a sign-in code" %}
+    {% endelement h1 class="block text-2xl font-bold leading-7 text-gray-900 sm:text-3xl mb-6" %}
+
+    {% element p %}
+        {% blocktranslate %}You will receive an email containing a special code for a password-free sign-in.{% endblocktranslate %}
+    {% endelement p class="mt-2 text-sm leading-6 text-gray-600 mb-8" %}
+
+    {% url 'account_request_login_code' as login_url %}
+    {% element form form=form method="post" action=login_url tags="entrance,login" %}
+        {% slot body %}
+            {% csrf_token %}
+            {% element fields form=form unlabeled=True %}
+            {% endelement fields class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2" %}
+            {{ redirect_field }}
+        {% endslot %}
+        {% slot actions %}
+            {% element button type="submit" tags="prominent,login" %}
+                {% translate "Request Code" %}
+            {% endelement button class="mt-4 w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %}
+        {% endslot %}
+    {% endelement form class="mt-8 space-y-6" %}
+
+    {% element h2 %}
+        {% url 'account_login' as login_url %}
+        {% element button href=login_url tags="link" %}
+            {% translate "Other sign-in options" %}
+        {% endelement button class="mt-6 text-sm font-medium text-indigo-600 hover:text-indigo-500" %}
+    {% endelement h2 class="mt-10 text-center" %}
+</div>
+{% endblock content %}

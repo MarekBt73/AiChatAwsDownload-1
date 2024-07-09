@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pl-PL" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Site{% endblock %}</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="{% static 'js/custom.js' %}" defer></script>
+</head>
+<body class="h-full w-full">
+    <div class="bg-gray-800 flex justify-center items-center w-full ">
+    <header class="container mx-auto">
+        {% include 'navigation-header.html' %}
+    </header>
+    </div>
+    <main class="container mx-auto flex flex-col p-10" >
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="w-full flex justify-center mt-4">
+        <p>&copy; 2024 My Site</p>
+    </footer>
+</body>
+</html>

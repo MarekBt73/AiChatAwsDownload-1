@@ -1,0 +1,70 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% load allauth account %}
+{% load form_tags %}
+
+{% block head_title %}
+    {% trans "Sign In" %}
+{% endblock head_title %}
+
+{% block content %}
+    <div class="mx-auto mt-16 max-w-xl sm:mt-20">
+        <h1 class="block text-sm font-semibold leading-6 text-gray-900">
+            {% trans "Zaloguj się" %}
+        </h1>
+
+        {% if not SOCIALACCOUNT_ONLY %}
+            <p class="block text-sm font-semibold leading-6 text-gray-900">
+                {% blocktranslate %}
+                Jeśli nie masz jeszcze konta, to proszę
+                    <a href="{{ signup_url }}" class="text-indigo-600 hover:text-indigo-500">
+                        Zarejestruj się!
+                    </a> 
+                {% endblocktranslate %}
+            </p>
+            
+            {% url 'account_login' as login_url %}
+            <form action="{{ login_url }}" method="post" class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                {% csrf_token %}
+                <div class="sm:col-span-2">
+                    <label for="{{ form.login.id_for_label }}" class="block text-sm font-semibold leading-6 text-gray-900">
+                        {{ form.login.label }}
+                    </label>
+                    <div class="mt-2.5">
+                        {{ form.login|add_class:"block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
+                    </div>
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="{{ form.password.id_for_label }}" class="block text-sm font-semibold leading-6 text-gray-900">
+                        {{ form.password.label }}
+                    </label>
+                    <div class="mt-2.5 relative">
+                        {{ form.password|add_class:"password-input block w-full rounded-md border-0 px-3.5 py-2 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
+                        <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5" onclick="togglePasswordVisibility('password-input')">
+                            <span class="material-icons" id="password-input-eye-icon">visibility</span>
+                        </button>
+                    </div>
+                </div>
+                {{ redirect_field }}
+                <div class="sm:col-span-2">
+                    <button type="submit" class="mt-4 w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        {% trans "Zaloguj się" %}
+                    </button>
+                </div>
+            </form>
+        {% endif %}
+        
+        {% if LOGIN_BY_CODE_ENABLED %}
+            <hr class="my-6">
+            <h2 class="block text-sm font-semibold leading-6 text-gray-900">
+                <a href="{{ request_login_code_url }}" class="text-indigo-600 hover:text-indigo-500">
+                    {% trans "Mail me a sign-in code" %}
+                </a>
+            </h2>
+        {% endif %}
+        
+        {% if SOCIALACCOUNT_ENABLED %}
+            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+        {% endif %}
+    </div>
+{% endblock content %}

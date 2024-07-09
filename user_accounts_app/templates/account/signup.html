@@ -1,0 +1,99 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+{% load allauth account %}
+{% load form_tags %}
+
+{% block head_title %}
+    {% trans "Signup" %}
+{% endblock head_title %}
+
+{% block content %}
+    <div class="mx-auto mt-16 max-w-xl sm:mt-20">
+        <h1 class="block text-sm font-semibold leading-6 text-gray-900">
+            {% trans "Sign Up" %}
+        </h1>
+
+        <p class="block text-sm font-semibold leading-6 text-gray-900">
+            {% blocktranslate %}Already have an account? Then please <a href="{{ login_url }}" class="text-indigo-600 hover:text-indigo-500">sign in</a>.{% endblocktranslate %}
+        </p>
+        
+        {% if not SOCIALACCOUNT_ONLY %}
+            {% url 'account_signup' as action_url %}
+            <form action="{{ action_url }}" method="post" class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                {% csrf_token %}
+                <div class="sm:col-span-2">
+                    <label for="{{ form.username.id_for_label }}" class="block text-sm font-semibold leading-6 text-gray-900">
+                        {{ form.username.label }}
+                    </label>
+                    <div class="mt-2.5">
+                        {{ form.username|add_class:"block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
+                    </div>
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="{{ form.email.id_for_label }}" class="block text-sm font-semibold leading-6 text-gray-900">
+                        {{ form.email.label }}
+                    </label>
+                    <div class="mt-2.5">
+                        {{ form.email|add_class:"block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
+                    </div>
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="{{ form.password1.id_for_label }}" class="block text-sm font-semibold leading-6 text-gray-900">
+                        {{ form.password1.label }}
+                    </label>
+                    <div class="mt-2.5 relative">
+                        {{ form.password1|add_class:"password1-input block w-full rounded-md border-0 px-3.5 py-2 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
+                        <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5" onclick="togglePasswordVisibility('password1-input')">
+                            <span class="material-icons" id="password1-input-eye-icon">visibility</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="{{ form.password2.id_for_label }}" class="block text-sm font-semibold leading-6 text-gray-900">
+                        {{ form.password2.label }}
+                    </label>
+                    <div class="mt-2.5 relative">
+                        {{ form.password2|add_class:"password2-input block w-full rounded-md border-0 px-3.5 py-2 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
+                        <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5" onclick="togglePasswordVisibility('password2-input')">
+                            <span class="material-icons" id="password2-input-eye-icon">visibility</span>
+                        </button>
+                    </div>
+                </div>
+                {{ redirect_field }}
+                <div class="sm:col-span-2">
+                    <button type="submit" class="mt-4 w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        {% trans "Sign Up" %}
+                    </button>
+                </div>
+            </form>
+        {% endif %}
+        
+        {% if SOCIALACCOUNT_ENABLED %}
+            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+        {% endif %}
+    </div>
+
+    <script>
+        function togglePasswordVisibility(passwordFieldClass) {
+            const passwordInput = document.querySelector(`.${passwordFieldClass}`);
+            const passwordEyeIcon = document.querySelector(`#${passwordFieldClass}-eye-icon`);
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordEyeIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                passwordEyeIcon.textContent = 'visibility';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInputs = document.querySelectorAll('.password-input');
+            passwordInputs.forEach(function(passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    passwordInput.classList.add('ring-2', 'ring-indigo-500');
+                });
+            });
+        });
+    </script>
+{% endblock content %}

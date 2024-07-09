@@ -1,0 +1,108 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Ignore the local SQLite database
+db.sqlite3
+
+# Ignore the local environment variables
+.env
+.env.*
+
+# Ignore Django migrations
+**/migrations/*
+!**/migrations/__init__.py
+
+# Ignore node_modules
+node_modules/
+
+# Ignore virtual environment
+venv/
+myenv/
+ENV/
+env/
+.venv/
+.env/
+
+# Ignore coverage files
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+
+# Ignore MyPy cache
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ignore Pyre type checker
+.pyre/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore pyenv
+.python-version
+
+# Ignore pipenv
+Pipfile.lock
+
+# Ignore Hatch specific files
+.hatch.env
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+*.swp
+*~
+
+# Ignore static and media files
+staticfiles/
+media/
+
+# Ignore build artifacts
+*.egg-info/
+.eggs/
+*.egg
+*.log
+*.lock
+*.swp
+*~
+tags
