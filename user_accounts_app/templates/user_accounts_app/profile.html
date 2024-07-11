@@ -1,22 +1,92 @@
 {% extends "base_generic.html" %}
+{% load form_tags %}
 
 {% block title %}
-Profile - {{ user.username }}
+Profil - {{ user.username }}
 {% endblock %}
 
 {% block content %}
-<h2>User Profile</h2>
-<p>Welcome, {{ user.username }}!</p>
+<div class="w-100 grid grid-cols-6 grid-rows-1">
+    <div class="w-100 mx-auto py-6 sm:px-6 lg:px-8 col-start-1 col-end-2 ">
+        <h2 class="text-2xl font-semibold leading-tight text-gray-900">Profil użytkownika</h2>
+        <p class="mt-2 text-lg text-gray-600">Witaj, {{ user.username }}!</p>
 
-<h3>Profile Details:</h3>
-<ul>
-    <li><strong>Username:</strong> {{ user.username }}</li>
-    <li><strong>Email:</strong> {{ user.email }}</li>
-</ul>
+        <h3 class="mt-8 text-lg leading-6 font-medium text-gray-900">Szczegóły profilu:</h3>
+        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg mt-4">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Szczegół
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Informacja
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Nazwa użytkownika</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Email</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Imię</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Nazwisko</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Adres</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.address }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Ulica</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.street }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Kod pocztowy</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.postal_code }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Miasto</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.city }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Telefon komórkowy</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.mobile_phone }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Przedmioty</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.get_subjects_display }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Typ szkoły</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.get_school_type_display }}</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">Klasa</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">Klasa: {{ user.get_grade_display }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-<h3>Account Actions:</h3>
-<ul>
-    <li><a href="{% url 'account_change_password' %}">Change Password</a></li>
-    <li><a href="{% url 'account_logout' %}">Logout</a></li>
-</ul>
+        <h3 class="mt-8 text-lg leading-6 font-medium text-gray-900">Akcje na koncie:</h3>
+        <ul class="mt-4 list-disc list-inside text-gray-600">
+            <li><a href="{% url 'account_change_password' %}" class="text-indigo-600 hover:text-indigo-900">Zmień hasło</a></li>
+            <li><a href="{% url 'account_logout' %}" class="text-indigo-600 hover:text-indigo-900">Wyloguj się</a></li>
+        </ul>
+
+        <h3 class="mt-8 text-lg leading-6 font-medium text-gray-900">Edytuj profil:</h3>
+        <div class="mt-4 p-4 bg-white shadow sm:rounded-lg">
+            <a href="{% url 'edit_profile' %}" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Edytuj profil</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

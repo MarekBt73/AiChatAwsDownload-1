@@ -46,7 +46,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-     'django.contrib.admin',
+    'multiselectfield',  # Upewnij się, że jest tutaj przecinek na końcu linii
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -54,12 +55,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'user_accounts_app',
-     'blog',
+    'blog',
+    'backend',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'backend'
-   
 ]
 
 MIDDLEWARE = [
@@ -70,7 +70,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',  # Dodaj tę linię
+    'allauth.account.middleware.AccountMiddleware',  
+    'backend.middleware.CustomLoginRedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -168,7 +169,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = True
 LOGIN_REDIRECT_URL = '/user/profile/'
 LOGAUT_REDIRECT_URL = 'login'
-""" ACCOUNT_SIGNUP_FORM_CLASS = 'user_accounts_app.forms.CustomSignupForm' """
+AUTH_USER_MODEL = 'user_accounts_app.CustomUser'
 
 
 
@@ -182,3 +183,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mayster.app@mbecht.pl'
 EMAIL_HOST_PASSWORD = 'b1l2a3c4k0MB$$$'
 DEFAULT_FROM_EMAIL = 'mayster.app@mbecht.pl'
+
+
+ACCOUNT_FORMS = {
+    'signup': 'user_accounts_app.forms.CustomSignupForm',  # Zmień 'yourapp' na nazwę swojej aplikacji
+}
