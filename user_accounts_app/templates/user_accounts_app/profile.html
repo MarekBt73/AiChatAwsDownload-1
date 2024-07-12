@@ -6,8 +6,8 @@ Profil - {{ user.username }}
 {% endblock %}
 
 {% block content %}
-<div class="w-100 grid grid-cols-6 grid-rows-1">
-    <div class="w-100 mx-auto py-6 sm:px-6 lg:px-8 col-start-1 col-end-2 ">
+<div class="w-100 grid grid-cols-1 lg:grid-cols-6 gap-6">
+    <div class="col-span-1 lg:col-span-2 mx-auto py-6 sm:px-6 lg:px-8">
         <h2 class="text-2xl font-semibold leading-tight text-gray-900">Profil użytkownika</h2>
         <p class="mt-2 text-lg text-gray-600">Witaj, {{ user.username }}!</p>
 
@@ -25,6 +25,7 @@ Profil - {{ user.username }}
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
+                    <!-- existing user details -->
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">Nazwa użytkownika</td>
                         <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.username }}</td>
@@ -76,7 +77,6 @@ Profil - {{ user.username }}
                 </tbody>
             </table>
         </div>
-
         <h3 class="mt-8 text-lg leading-6 font-medium text-gray-900">Akcje na koncie:</h3>
         <ul class="mt-4 list-disc list-inside text-gray-600">
             <li><a href="{% url 'account_change_password' %}" class="text-indigo-600 hover:text-indigo-900">Zmień hasło</a></li>
@@ -86,6 +86,64 @@ Profil - {{ user.username }}
         <h3 class="mt-8 text-lg leading-6 font-medium text-gray-900">Edytuj profil:</h3>
         <div class="mt-4 p-4 bg-white shadow sm:rounded-lg">
             <a href="{% url 'edit_profile' %}" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Edytuj profil</a>
+        </div>
+    </div>
+
+    <div class="col-span-1 lg:col-span-4 mx-auto py-6 sm:px-6 lg:px-8">
+        <h3 class="mt-8 text-lg leading-6 font-medium text-gray-900">Historia aktywności:</h3>
+        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg mt-4">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Data
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Typ aktywności
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Opis
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for activity in activities %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ activity.timestamp }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ activity.get_activity_type_display }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap break-words">{{ activity.description }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="mt-8 text-lg leading-6 font-medium text-gray-900">Postępy w nauce:</h3>
+        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg mt-4">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Przedmiot
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Procent opanowania
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Ostatnia aktualizacja
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for prog in progress %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ prog.subject }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ prog.progress_percentage }}%</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ prog.last_updated }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

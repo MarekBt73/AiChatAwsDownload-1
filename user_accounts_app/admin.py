@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Subject
+from .models import CustomUser, Subject, StudentActivity, StudentProgress
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 class CustomUserAdmin(UserAdmin):
@@ -25,5 +25,15 @@ class CustomUserAdmin(UserAdmin):
         ('School info', {'fields': ('subjects', 'school_type', 'grade')}),
     )
 
+class StudentActivityAdmin(admin.ModelAdmin):
+    list_display = ['user', 'activity_type', 'description', 'timestamp']
+    list_filter = ['activity_type', 'timestamp', 'user']
+
+class StudentProgressAdmin(admin.ModelAdmin):
+    list_display = ['user', 'subject', 'progress_percentage', 'last_updated']
+    list_filter = ['subject', 'progress_percentage', 'last_updated', 'user']
+
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Subject)
+admin.site.register(StudentActivity, StudentActivityAdmin)
+admin.site.register(StudentProgress, StudentProgressAdmin)
