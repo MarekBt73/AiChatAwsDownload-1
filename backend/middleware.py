@@ -1,6 +1,5 @@
-# your_app/middleware.py
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, resolve
 
 class CustomLoginRedirectMiddleware:
     def __init__(self, get_response):
@@ -15,6 +14,12 @@ class CustomLoginRedirectMiddleware:
                 return redirect(reverse('admin:index'))
             # Przekierowanie zwykłego użytkownika do strony profilu
             else:
+                return redirect(reverse('profile'))
+
+        # Ograniczenie dostępu do formularzy dodawania i edycji dla administratorów
+        if not request.user.is_superuser:
+            resolved_path = resolve(request.path)
+            if resolved_path.url_name in ['add_material', 'edit_material']:
                 return redirect(reverse('profile'))
 
         response = self.get_response(request)

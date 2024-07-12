@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'user_accounts_app',
     'blog',
     'backend',
+    'content_management',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

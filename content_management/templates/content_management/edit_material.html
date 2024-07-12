@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+{% load form_tags %}
+
+{% block title %}Edytuj Materiał{% endblock %}
+
+{% block content %}
+  <h2 class="text-2xl font-semibold leading-tight text-gray-900">Edytuj Materiał Edukacyjny</h2>
+
+  {% if messages %}
+    <ul class="messages mt-4">
+      {% for message in messages %}
+        <li{% if message.tags %} class="text-red-500{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="post" class="mt-6 space-y-6">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-700">Zapisz</button>
+  </form>
+{% endblock %}

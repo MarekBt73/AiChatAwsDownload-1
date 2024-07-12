@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Lista Materiałów{% endblock %}
+
+{% block content %}
+  <h2>Lista Materiałów Edukacyjnych</h2>
+  <ul>
+    {% for material in materials %}
+      <li>{{ material.title }} - {{ material.get_material_type_display }}</li>
+    {% endfor %}
+  </ul>
+  {% if user.is_superuser %}
+    <a href="{% url 'add_material' %}">Dodaj nowy materiał</a>
+  {% endif %}
+{% endblock %}

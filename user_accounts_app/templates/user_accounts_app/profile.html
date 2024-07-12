@@ -145,6 +145,17 @@ Profil - {{ user.username }}
                 </tbody>
             </table>
         </div>
+
+        <h3 class="mt-8 text-lg leading-6 font-medium text-gray-900">Akcje na koncie:</h3>
+        <ul class="mt-4 list-disc list-inside text-gray-600">
+            <li><a href="{% url 'account_change_password' %}" class="text-indigo-600 hover:text-indigo-900">Zmień hasło</a></li>
+            <li><a href="{% url 'account_logout' %}" class="text-indigo-600 hover:text-indigo-900">Wyloguj się</a></li>
+        </ul>
+
+        <h3 class="mt-8 text-lg leading-6 font-medium text-gray-900">Edytuj profil:</h3>
+        <div class="mt-4 p-4 bg-white shadow sm:rounded-lg">
+            <a href="{% url 'edit_profile' %}" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Edytuj profil</a>
+        </div>
     </div>
 </div>
 {% endblock %}
