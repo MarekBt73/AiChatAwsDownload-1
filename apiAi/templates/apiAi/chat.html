@@ -1,0 +1,46 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %}
+Chat with GPT
+{% endblock %}
+
+{% block content %}
+<div class="w-100 grid grid-cols-1 lg:grid-cols-6 gap-6">
+    <div class="col-span-1 lg:col-span-4 mx-auto py-6 sm:px-6 lg:px-8">
+        <h2 class="text-2xl font-semibold leading-tight text-gray-900">Chat with GPT</h2>
+        
+        <div id="chat-box" class="mt-4 p-4 bg-white shadow sm:rounded-lg">
+            <div id="messages" class="mb-4"></div>
+            <textarea id="user-message" class="w-full p-2 border border-gray-300 rounded-md" rows="4"></textarea>
+            <button id="send-message" class="mt-2 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Send
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#send-message').click(function() {
+            var userMessage = $('#user-message').val();
+            $('#messages').append('<div class="mb-2 text-blue-600"><strong>You:</strong> ' + userMessage + '</div>');
+
+            $.ajax({
+                url: "{% url 'chat_with_gpt' %}",
+                method: "POST",
+                data: JSON.stringify({ message: userMessage }),
+                contentType: "application/json",
+                success: function(response) {
+                    $('#messages').append('<div class="mb-2 text-green-600"><strong>GPT:</strong> ' + response.response + '</div>');
+                    $('#user-message').val('');
+                },
+                error: function() {
+                    $('#messages').append('<div class="mb-2 text-red-600"><strong>Error:</strong> Something went wrong!</div>');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
