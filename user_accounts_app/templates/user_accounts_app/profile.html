@@ -25,7 +25,6 @@ Profil - {{ user.username }}
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    <!-- existing user details -->
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">Nazwa użytkownika</td>
                         <td class="px-6 py-4 whitespace-nowrap break-words">{{ user.username }}</td>
@@ -140,6 +139,30 @@ Profil - {{ user.username }}
                         <td class="px-6 py-4 whitespace-nowrap">{{ prog.subject }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ prog.progress_percentage }}%</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ prog.last_updated }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="mt-8 text-lg leading-6 font-medium text-gray-900">Konwersacje na czacie:</h3>
+        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg mt-4">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Data
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Akcja
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for chat in chats %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ chat.created_at }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap"><a href="{% url 'chat_detail' chat.id %}" class="text-indigo-600 hover:text-indigo-900">Zobacz rozmowę</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
