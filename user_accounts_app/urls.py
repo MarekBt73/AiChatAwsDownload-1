@@ -15,4 +15,5 @@ urlpatterns = [
     path("profile/", profile_view, name="profile"),
     path("profile/chat/<int:chat_id>/", chat_detail_view, name="chat_detail"),
     path("profile/edit/", edit_profile_view, name="edit_profile"),
+    path("chat/<str:session_id>/", chat_detail_view, name="chat_detail"),
 ]

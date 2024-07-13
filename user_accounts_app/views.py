@@ -6,6 +6,7 @@ from django.db import transaction
 import logging
 from apiAi.models import Chat
 from .models import StudentActivity, StudentProgress
+import markdown
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,15 @@ def profile_view(request):
     user = request.user
     activities = StudentActivity.objects.filter(user=user).order_by("-timestamp")
     progress = StudentProgress.objects.filter(user=user)
-    chats = Chat.objects.filter(user=user).order_by("-created_at")
+    # Grupowanie czatów według session_id
+    chat_sessions = Chat.objects.filter(user=user).values("session_id").distinct()
+    chats = {
+        session["session_id"]: Chat.objects.filter(
+            session_id=session["session_id"]
+        ).order_by("created_at")
+        for session in chat_sessions
+    }
+
     return render(
         request,
         "user_accounts_app/profile.html",
@@ -41,9 +50,16 @@ def edit_profile_view(request):
 
 
 @login_required
-def chat_detail_view(request, chat_id):
-    chat = get_object_or_404(Chat, id=chat_id, user=request.user)
-    return render(request, "user_accounts_app/chat_detail.html", {"chat": chat})
+def chat_detail_view(request, session_id):
+    chats = Chat.objects.filter(session_id=session_id, user=request.user).order_by(
+        "created_at"
+    )
+    if not chats:
+        return redirect("profile")
+    # Przetwarzanie odpowiedzi z Markdown na HTML
+    for chat in chats:
+        chat.response = markdown.markdown(chat.response)
+    return render(request, "user_accounts_app/chat_detail.html", {"chats": chats})
 
 
 class CustomSignupView(SignupView):

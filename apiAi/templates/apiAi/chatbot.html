@@ -104,23 +104,28 @@ Chat with GPT
   </form>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const messagesList = document.querySelector('.messages-list');
     const messageForm = document.querySelector('.message-form');
     const messageInput = document.querySelector('.message-input');
 
-    function appendMessage(message, sender) {
+    function appendMessage(message, sender, isHtml = false) {
       const messageItem = document.createElement('li');
       messageItem.classList.add('message', sender, 'flex', 'flex-col', 'items-start');
+      let content;
+      if (isHtml) {
+        content = message; // Bezpośrednio przypisz HTML
+      } else {
+        content = `<div class="message-content">${message}</div>`; // Zwykły tekst zamieniony na HTML
+      }
       messageItem.innerHTML = `
         <div class="message-text p-3 ${sender === 'sent' ? 'bg-green-100' : 'bg-gray-200'} rounded-lg">
             <div class="message-sender font-bold">
                 ${sender === 'sent' ? 'You' : 'AI Chatbot'}
             </div>
-            <div class="message-content">
-                ${message}
-            </div>
+            ${content} <!-- Użyj content, który może być HTML -->
         </div>`;
       messagesList.appendChild(messageItem);
       messageItem.scrollIntoView({ behavior: "smooth" });
@@ -145,9 +150,19 @@ Chat with GPT
           'message': message
         })
       })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then(data => {
-        appendMessage(data.response, 'received');
+        const htmlResponse = data.response; // Odpowiedź jest już w HTML
+        appendMessage(htmlResponse, 'received', true); // Przekazanie flagi, że odpowiedź jest w HTML
+      })
+      .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+        appendMessage('Sorry, there was an error processing your request.', 'received', true); // Wyświetl wiadomość o błędzie
       });
     });
   });

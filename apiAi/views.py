@@ -10,6 +10,7 @@ from .models import Chat
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.models import User
+import markdown
 
 # Ustaw klucz API OpenAI
 api_key = config("OPENAI_API_KEY")
@@ -26,14 +27,6 @@ def ask_openai(message):
             model="gpt-4-turbo",  # Zmieniono na model "gpt-4-turbo"
             messages=[
                 {
-                    # The `"role": "system"` and accompanying content in the `ask_openai` function are
-                    # part of the input messages provided to the OpenAI API for generating responses.
-                    # In this specific context, it sets the role as "system" and provides a prompt for
-                    # the AI model to simulate a scenario where the user is a mathematics teacher in a
-                    # Polish high school. The prompt instructs the AI to answer students' questions
-                    # concisely, provide necessary calculations and final results, explain the
-                    # calculations in a simplified manner without excessive details, and respond in
-                    # Polish.
                     "role": "system",
                     "content": (
                         "You are a mathematics teacher in a Polish high school. "
@@ -49,13 +42,20 @@ def ask_openai(message):
                         "Do not use LaTeX-style fractions like '\\frac'. "
                         "Do not display '\\)'. "
                         "Respond in Polish."
+                        "Format the response in Markdown."
+                        "Explain step by step how you performed the calculation or which formulas you used and what you were guided by."
+                        "Refer to the theory on which you base the solution."
+                        "Use bold or bullet points when answering a question to make the answer readable. You can use Tailwind CSS classes."
                     ),
                 },
                 {"role": "user", "content": message},
             ],
+            temperature=0.3,
+            # max_tokens=250,
         )
         answer = response.choices[0].message.content.strip()
-        return answer
+        html_answer = markdown.markdown(answer)
+        return html_answer
     except Exception as e:
         logger.error(f"Error in OpenAI API call: {e}")
         return "Sorry, there was an error processing your request."
@@ -81,7 +81,7 @@ def chatbot(request):
             created_at=timezone.now(),  # Użycie Django timezone
         )
         chat.save()
-        return JsonResponse({"message": message, "response": f"<pre>{response}</pre>"})
+        return JsonResponse({"message": message, "response": f"{response}"})
 
     return render(request, "apiAi/chatbot.html", {"page_obj": page_obj})
 
