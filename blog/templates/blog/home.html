@@ -1,5 +1,59 @@
 {% extends "base_generic.html" %}
+{% load static %}
 {% block content %}
-<h2>Home Page</h2>
-<p>Welcome to the home page!</p>
+<!-- Hero Section -->
+<section class="bg-white py-20">
+    <div class="container mx-auto flex flex-col items-center justify-center text-center px-5">
+        <h1 class="text-4xl font-bold text-gray-900 md:text-6xl">Witamy w AI-Mentor</h1>
+        <p class="mt-4 text-lg text-gray-600 md:text-xl">Twój wirtualny nauczyciel, dostępny zawsze, gdy go potrzebujesz.</p>
+        <img src="{% static 'images/futuristic_ai_mentor.webp' %}" alt="AI Mentor" class="mt-8 w-full max-w-lg rounded-lg shadow-lg">
+        <a href="{% url 'chat_with_gpt-2' %}" class="mt-8 bg-indigo-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-indigo-500">Rozpocznij teraz</a>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="bg-indigo-700 text-white py-20">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold md:text-4xl">Dołącz do nas już teraz!</h2>
+        <p class="mt-4 text-lg md:text-xl">Rozpocznij swoją edukacyjną podróż z AI-Mentor.</p>
+        <div class="h-24 flex justify-center items-center">
+        <a href="{% url 'account_signup' %}" class="h-14  bg-white text-indigo-700 px-6 py-3 rounded-lg text-lg hover:bg-gray-100">Zarejestruj się</a>
+        </div
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="bg-gray-100 py-20">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-900 md:text-4xl">Funkcje AI-Mentor</h2>
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 px-5">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <span class="material-icons text-indigo-600 text-4xl">chat</span>
+                <h3 class="mt-4 text-xl font-semibold">Odpowiadanie na pytania</h3>
+                <p class="mt-2 text-gray-600">ChatGPT odpowiada na pytania uczniów w czasie rzeczywistym.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <span class="material-icons text-indigo-600 text-4xl">record_voice_over</span>
+                <h3 class="mt-4 text-xl font-semibold">Interakcje głosowe</h3>
+                <p class="mt-2 text-gray-600">Rozpoznawanie mowy i synteza mowy dla pełnej interakcji.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <span class="material-icons text-indigo-600 text-4xl">school</span>
+                <h3 class="mt-4 text-xl font-semibold">Interaktywne treści</h3>
+                <p class="mt-2 text-gray-600">Tworzenie quizów i gier edukacyjnych, które angażują uczniów.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="bg-white py-20">
+    <div class="container mx-auto text-center px-5">
+        <h2 class="text-3xl font-bold text-gray-900 md:text-4xl">Skontaktuj się z nami</h2>
+        <p class="mt-4 text-lg text-gray-600 md:text-xl">Masz pytania? Skontaktuj się z naszym zespołem wsparcia technicznego.</p>
+        <div class="h-24 flex justify-center items-center">
+        <a href="{% url 'contact' %}" class="h-14 mt-8 bg-indigo-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-indigo-500">Kontakt</a>
+        </div>
+    </div>
+</section>
 {% endblock %}

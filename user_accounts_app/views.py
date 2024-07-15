@@ -8,6 +8,7 @@ from apiAi.models import Chat
 from .models import StudentActivity, StudentProgress
 import markdown
 
+
 logger = logging.getLogger(__name__)
 
 

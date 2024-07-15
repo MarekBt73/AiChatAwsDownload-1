@@ -18,7 +18,7 @@ Chat with GPT
   }
   .message-content {
     white-space: pre-wrap; /* Umożliwia zawijanie wierszy */
-    line-height: 1.2; /* Zmniejsza interlinię */
+    line-height: 2; /* Zmniejsza interlinię */
     word-break: break-word; /* Zapewnia łamanie słów */
   }
   .pagination {
@@ -48,18 +48,26 @@ Chat with GPT
 {% block content %}
 <div class="chat-container flex flex-col h-90 pb-64">
   <div class="card flex-grow flex flex-col">
-    <div class="card-header bg-green-500 text-white p-4">Korepetycja z Matematyki klas 2 liceum / technikum</div>
+    <div class="card-header bg-green-500 text-white p-4">Korepetycja z Matematyki  </div>
     {% if user.is_authenticated %}
-    <div class="bg-green-500 text-white p-4"><h3 class="text-base/7 text-xl">Witaj, {{ user.username }}</h3></div>
     {% endif %}
     <div class="card-body messages-box flex-grow overflow-y-auto p-4 bg-gray-100">
       <ul class="messages-list space-y-4">
+        <li class="message received flex flex-col items-start">
+          <div class="flex items-center">
+            <img src="{% static 'images/mateu-1.webp' %}" alt="MateU - Robot Tutor" class="w-16 h-16 rounded-full mr-4">
+            <div class="message-text p-3 bg-gray-200 rounded-lg">
+              <div class="message-sender font-bold">MateU</div>
+              <div class="message-content">Cześć {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}, jestem MateU - twój wirtualny mentor matematyczny. W czym mogę ci pomóc?</div>
+            </div>
+          </div>
+        </li>
         {% for chat in page_obj %}
           {% if chat.user == request.user %}
             <li class="message sent flex flex-col items-start">
               <div class="message-text p-3 bg-green-100 rounded-lg">
                 <div class="message-sender font-bold">
-                  {{ user.username }}
+                  {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}
                 </div>
                 <div class="message-content">
                   {{ chat.message }}
@@ -67,12 +75,15 @@ Chat with GPT
               </div>
             </li>
             <li class="message received flex flex-col items-start">
-              <div class="message-text p-3 bg-gray-200 rounded-lg">
-                <div class="message-sender font-bold">
-                  MatMentorAI
-                </div>
-                <div class="message-content {{ chat.response|add_class2:"new-class" }}">
-                  {{ chat.response }}
+              <div class="flex items-center">
+                <img src="{% static 'images/mateu-1.webp' %}" alt="MateU - Robot Tutor" class="w-16 h-16 rounded-full mr-4">
+                <div class="message-text p-3 bg-gray-200 rounded-lg">
+                  <div class="message-sender font-bold">
+                    MateU
+                  </div>
+                  <div class="message-content {{ chat.response|add_class2:'new-class' }}">
+                    {{ chat.response|safe }}
+                  </div>
                 </div>
               </div>
             </li>
@@ -120,12 +131,16 @@ Chat with GPT
       } else {
         content = `<div class="message-content">${message}</div>`; // Zwykły tekst zamieniony na HTML
       }
+      const avatar = '{% static "images/mateu-1.webp" %}';
       messageItem.innerHTML = `
-        <div class="message-text p-3 ${sender === 'sent' ? 'bg-green-100' : 'bg-gray-200'} rounded-lg">
+        <div class="flex items-center">
+          ${sender === 'received' ? '<img src="' + avatar + '" alt="MateU - Robot Tutor" class="w-16 h-16 rounded-full mr-4">' : ''}
+          <div class="message-text p-3 ${sender === 'sent' ? 'bg-green-100' : 'bg-gray-200'} rounded-lg">
             <div class="message-sender font-bold">
-                ${sender === 'sent' ? 'You' : 'AI Chatbot'}
+                ${sender === 'sent' ? 'You' : 'MateU'}
             </div>
             ${content} <!-- Użyj content, który może być HTML -->
+          </div>
         </div>`;
       messagesList.appendChild(messageItem);
       messageItem.scrollIntoView({ behavior: "smooth" });
