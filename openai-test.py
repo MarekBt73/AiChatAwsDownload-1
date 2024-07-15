@@ -9,7 +9,6 @@ print(api_key)
 
 OPENAI_API_KEY = config("OPENAI_API_KEY")
 
-print(f"OpenAI API Key from settings: {OPENAI_API_KEY}")
 
 # Utwórz klienta OpenAI z kluczem API
 client = OpenAI(api_key="sk-None-ux1xxkAwFDO5EDjolF6CT3BlbkFJz5UJmcufMieVxjeI45pa")

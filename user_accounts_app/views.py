@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, get_object_or_404
-from .forms import CustomUserChangeForm
-from allauth.account.views import SignupView
+from .forms import CustomUserChangeForm, CustomSignupForm  # Import CustomSignupForm
+from allauth.account.views import SignupView, ConfirmEmailView
 from django.db import transaction
 import logging
 from apiAi.models import Chat
@@ -12,7 +12,9 @@ logger = logging.getLogger(__name__)
 
 
 def email_confirmation(request):
-    return render(request, "/account/email_confirm.html")
+    return render(
+        request, "account/email_confirmation_sent.html"
+    )  # Upewnij się, że ścieżka jest poprawna
 
 
 @login_required
@@ -63,6 +65,7 @@ def chat_detail_view(request, session_id):
 
 
 class CustomSignupView(SignupView):
+    form_class = CustomSignupForm  # Użyj CustomSignupForm
 
     def form_valid(self, form):
         try:
@@ -70,7 +73,8 @@ class CustomSignupView(SignupView):
                 response = super().form_valid(form)
                 user = form.save(self.request)
                 logger.info(f"User created: {user}")
-                return response
+                # Przekierowanie do widoku email_confirmation po rejestracji
+                return redirect("email_confirmation")
         except Exception as e:
             logger.error(f"Error during signup: {e}")
             form.add_error(None, str(e))

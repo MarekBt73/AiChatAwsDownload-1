@@ -1,25 +1,33 @@
-{% extends "account/base_manage.html" %}
+{% extends "base_generic.html" %}
 {% load i18n %}
 {% load allauth %}
 {% block head_title %}
     {% trans "Verify Your Email Address" %}
 {% endblock head_title %}
 {% block content %}
-    {% element h1 %}
-        {% trans "Verify Your Email Address" %}
-    {% endelement %}
-    {% url 'account_email' as email_url %}
-    {% element p %}
-        {% blocktrans %}This part of the site requires us to verify that
-you are who you claim to be. For this purpose, we require that you
-verify ownership of your email address. {% endblocktrans %}
-    {% endelement %}
-    {% element p %}
-        {% blocktrans %}We have sent an email to you for
-verification. Please click on the link inside that email. If you do not see the verification email in your main inbox, check your spam folder. Otherwise
-contact us if you do not receive it within a few minutes.{% endblocktrans %}
-    {% endelement %}
-    {% element p %}
-        {% blocktrans %}<strong>Note:</strong> you can still <a href="{{ email_url }}">change your email address</a>.{% endblocktrans %}
-    {% endelement %}
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+        {% element h1 %}
+            <h1 class="text-2xl font-bold text-gray-900 mb-4">
+                {% trans "Verify Your Email Address" %}
+            </h1>
+        {% endelement %}
+        {% url 'account_email' as email_url %}
+        {% element p %}
+            <p class="text-gray-700 mb-4">
+                {% blocktrans %}Ta część witryny wymaga od nas zweryfikowania, że jesteś osobą, za którą się podajesz. W tym celu musimy zweryfikować własność Twojego adresu e-mail. {% endblocktrans %}
+            </p>
+        {% endelement %}
+        {% element p %}
+            <p class="text-gray-700 mb-4">
+                {% blocktrans %}Wysłaliśmy do Ciebie e-mail w celu weryfikacji. Proszę kliknij na link w tej wiadomości. Jeśli nie widzisz e-maila w swojej głównej skrzynce odbiorczej, sprawdź folder spam. Prosimy o kontakt, jeśli nie otrzymasz wiadomości w ciągu kilku minut.{% endblocktrans %}
+            </p>
+        {% endelement %}
+        {% element p %}
+            <p class="text-gray-700">
+                {% blocktrans %}<strong>Uwaga:</strong> nadal możesz <a href="{{ email_url }}" class="text-indigo-600 hover:text-indigo-500">zmienić swój adres e-mail</a>.{% endblocktrans %}
+            </p>
+        {% endelement %}
+    </div>
+</div>
 {% endblock content %}

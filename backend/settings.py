@@ -14,7 +14,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 
 OPENAI_API_KEY = config("OPENAI_API_KEY")
-print(f"OpenAI API Key from settings: {OPENAI_API_KEY}")
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,14 +94,13 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "bazadb1",
+        "NAME": "bazadb3",
         "USER": "swrwerserdefdsfdfa",
         "PASSWORD": "jagieddbfdrea66sad8778sa7dsa7dcxbkjasbcjkas",
         "HOST": "localhost",
-        "PORT": "5432",
+        "PORT": "5434",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -159,6 +158,7 @@ ACCOUNT_USERNAME_REQUIRED = True
 LOGIN_REDIRECT_URL = "/user/profile/"
 LOGAUT_REDIRECT_URL = "login"
 AUTH_USER_MODEL = "user_accounts_app.CustomUser"
+ACCOUNT_UNIQUE_EMAIL = True  # Upewnij się, że ta opcja jest ustawiona
 
 
 # Konfiguracja e-mail

@@ -1,14 +1,22 @@
-{% extends "account/base_entrance.html" %}
+{% extends "base_generic.html" %}
 {% load i18n %}
 {% load allauth %}
 {% block head_title %}
     {% trans "Verify Your Email Address" %}
 {% endblock head_title %}
 {% block content %}
-    {% element h1 %}
-        {% trans "Verify Your Email Address" %}
-    {% endelement %}
-    {% element p %}
-        {% blocktrans %}We have sent an email to you for verification. Follow the link provided to finalize the signup process. If you do not see the verification email in your main inbox, check your spam folder. Please contact us if you do not receive the verification email within a few minutes.{% endblocktrans %}
-    {% endelement %}
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+        {% element h1 %}
+            <h1 class="text-2xl font-bold text-gray-900 mb-4">
+                {% trans "Verify Your Email Address" %}
+            </h1>
+        {% endelement %}
+        {% element p %}
+            <p class="text-gray-700 mb-4">
+                {% blocktrans %}Wysłaliśmy do Ciebie e-mail w celu weryfikacji. Postępuj zgodnie z instrukcjami zawartymi w wiadomości, aby zakończyć proces rejestracji. Jeśli nie widzisz wiadomości w swojej głównej skrzynce odbiorczej, sprawdź folder spam. Prosimy o kontakt, jeśli nie otrzymasz wiadomości weryfikacyjnej w ciągu kilku minut.{% endblocktrans %}
+            </p>
+        {% endelement %}
+    </div>
+</div>
 {% endblock content %}
