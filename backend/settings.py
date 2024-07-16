@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "compressor",
     "user_accounts_app",
     "blog",
     "backend",
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "chat_bot_app",
 ]
 
 MIDDLEWARE = [
@@ -194,3 +196,10 @@ LOGGING = {
         },
     },
 }
+
+
+COMPRESS_ROOT = BASE_DIR / "static"
+
+COMPRESS_ENABLED = True
+
+STATICFILES_FINDERS = ("compressor.finders.CompressorFinder",)

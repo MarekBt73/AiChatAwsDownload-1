@@ -1,0 +1,65 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% load api_ai_tags %}
+
+{% block title %}
+Chat with GPT
+{% endblock %}
+
+{% block styles %}
+<style>
+  body, html {
+    height: 100%;
+  }
+  .messages-box {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .message-content {
+    white-space: pre-wrap;
+    line-height: 2;
+    word-break: break-word;
+  }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .pagination a {
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    color: #333;
+  }
+  .pagination a.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+  }
+  .btn-new-chat {
+    margin: 1rem;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>Chat z OpenAI</h1>
+    <input type="text" id="userMessage" placeholder="Wpisz swoje pytanie">
+    <button id="sendMessage">Wyślij</button>
+    <div id="response"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#sendMessage").click(function() {
+                var stream = $("#userMessage").val();
+                $.post("/chat_with_openai/", {stream: stream}, function(data) {
+                    $("#response").text(data.response);
+                });
+            });
+        });
+    </script>
+{% endblock %}

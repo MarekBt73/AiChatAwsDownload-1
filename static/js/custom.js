@@ -38,7 +38,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Ustawienie funkcji togglePasswordVisibility jako globalnie dostępnej
         window.togglePasswordVisibility = togglePasswordVisibility;
-    } else {
-        console.warn('No password input elements found.');
-    }
+    } 
 });

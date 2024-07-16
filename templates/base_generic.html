@@ -1,3 +1,4 @@
+{% load compress %}
 <!DOCTYPE html>
 <html lang="pl-PL" class="h-full">
 <head>
@@ -6,9 +7,12 @@
     {% load static %}
     <link rel="icon" href="{% static 'favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <script src="https://cdn.tailwindcss.com"></script>
+    {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="{% static 'js/custom.js' %}" defer></script>
+   
+    {% compress css %} 
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+   {% endcompress %}
     <meta name="csrf-token" content="{{ csrf_token }}">
 
 </head>
@@ -25,50 +29,8 @@
         <p>&copy; 2024 My Site</p>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            const menuButton = document.getElementById('user-menu-button');
-            const menu = document.getElementById('user-menu');
-    
-            if (menuButton) {
-                menuButton.addEventListener('click', function () {
-                    console.log('click menu button');
-                    const expanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
-                    menuButton.setAttribute('aria-expanded', !expanded);
-                    menu.classList.toggle('hidden');
-                });
-            }
-            if (menu) {
-                menu.addEventListener('click', function () {
-                    menu.classList.toggle('hidden');
-                });
-            }
-
-           
-    
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
 
 
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', function () {
-                    const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                    mobileMenuButton.setAttribute('aria-expanded', !expanded);
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
-            if (mobileMenu) {
-                mobileMenu.addEventListener('click', function () {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
-    
-        });
-    </script>
-    
-
-
-
+    <script src="{% static 'js/custom.js' %}" defer></script>
 </body>
 </html>
