@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  backend:
+    env_file:
+      - .env
+    build: .
+    container_name: backend
+    command: ["sh", "-c", "until pg_isready -h db_chat_container -p 5432 -U marekbecht; do echo 'Waiting for db to be ready...'; sleep 2; done && python manage.py runserver 0.0.0.0:9000"]
+    volumes:
+      - .:/app
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db_chat_container
+    environment:
+      - DATABASE_URL=postgres://marekbecht:@db_chat_container/db_chat
+      - PYTHONPATH=/app/libs
+
+  db_chat_container:
+    image: postgres:13
+    container_name: db_chat_container
+    environment:
+      POSTGRES_DB: db_chat
+      POSTGRES_USER: marekbecht
+      POSTGRES_PASSWORD: 12345678marek
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:

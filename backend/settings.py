@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    "compressor",
     "user_accounts_app",
     "blog",
     "backend",
@@ -96,14 +95,13 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "bazadb3",
-        "USER": "swrwerserdefdsfdfa",
-        "PASSWORD": "jagieddbfdrea66sad8778sa7dsa7dcxbkjasbcjkas",
-        "HOST": "localhost",
-        "PORT": "5434",
+        "NAME": config("DB_NAME", default="db_chat"),
+        "USER": config("DB_USER", default="marekbecht"),
+        "PASSWORD": config("DB_PASSWORD", default="b1l2a3c4k0mb@@@"),
+        "HOST": config("DB_HOST", default="db_chat_container"),
+        "PORT": config("DB_PORT", default="5432"),
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -201,5 +199,3 @@ LOGGING = {
 COMPRESS_ROOT = BASE_DIR / "static"
 
 COMPRESS_ENABLED = True
-
-STATICFILES_FINDERS = ("compressor.finders.CompressorFinder",)

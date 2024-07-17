@@ -1,4 +1,4 @@
-{% load compress %}
+
 <!DOCTYPE html>
 <html lang="pl-PL" class="h-full">
 <head>
@@ -10,9 +10,9 @@
     {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    
-    {% compress css %} 
+
     <link rel="stylesheet" href="{% static 'src/output.css' %}">
-   {% endcompress %}
+
     <meta name="csrf-token" content="{{ csrf_token }}">
 
 </head>
