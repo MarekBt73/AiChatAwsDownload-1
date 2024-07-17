@@ -1,18 +1,11 @@
 from openai import OpenAI
 from decouple import config
 
-
 # Pobierz klucz API z pliku .env
 api_key = config("OPENAI_API_KEY")
-print(api_key)
-
-
-OPENAI_API_KEY = config("OPENAI_API_KEY")
-
 
 # Utwórz klienta OpenAI z kluczem API
-client = OpenAI(api_key="sk-None-ux1xxkAwFDO5EDjolF6CT3BlbkFJz5UJmcufMieVxjeI45pa")
-
+client = OpenAI(api_key=api_key)
 
 completion = client.chat.completions.create(
     model="gpt-4-turbo",
@@ -28,4 +21,4 @@ completion = client.chat.completions.create(
     ],
 )
 
-print(completion.choices[0].message)
+print(completion["choices"][0]["message"]["content"])

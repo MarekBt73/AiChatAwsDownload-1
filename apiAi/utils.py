@@ -33,6 +33,8 @@ def ask_openai(user_name, school_type, grade, message, first_message=False):
             f"Refer to the theory on which you base the solution. "
             f"Use bold or bullet points when answering a question to make the answer readable. You can use Tailwind CSS classes. "
             f"Always address the student by their name, {user_name}, at the beginning of your response. "
+            f"Write mathematical expressions (e.g., c^2 = a^2 + b^2) in a way that is clear and understandable for elementary or high school students. "
+            f"Use common mathematical symbols such as those shown in the attached graphic file. "
         )
 
         if first_message:
